@@ -40,6 +40,19 @@ const buildResponse = (data?: any, error?: any): IAPIResponse => ({
   error: error ? extractMessage(error) : undefined,
 });
 
+/**
+ * Verifies if a given value is a valid API Response object.
+ * @param response
+ * @returns boolean
+ */
+const isResponse = (response: any): response is IAPIResponse => (
+  !!response
+  && typeof response === 'object'
+  && typeof response.success === 'boolean'
+  && Object.hasOwn(response, 'data')
+  && Object.hasOwn(response, 'error')
+);
+
 
 
 
@@ -53,4 +66,5 @@ export {
 
   // implementation
   buildResponse,
+  isResponse,
 };

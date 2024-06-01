@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import { buildResponse } from './index.js';
+import { buildResponse, isResponse } from './index.js';
 
 /* ************************************************************************************************
  *                                             TESTS                                              *
@@ -46,5 +46,42 @@ describe('buildResponse', () => {
       data: { some: 'data', foo: 123456 },
       error: 'Ops, there was an error',
     });
+  });
+});
+
+
+
+describe('isResponse', () => {
+  test('can identify a successful response object', () => {
+    expect(isResponse(buildResponse())).toBe(true);
+  });
+
+  test('can identify a successful response object w/ data', () => {
+    expect(isResponse(buildResponse({ hello: 'world' }))).toBe(true);
+  });
+
+  test('can identify an unsuccessful response object', () => {
+    expect(isResponse(buildResponse(undefined, new Error('Oops, there\'s been an error.')))).toBe(true);
+  });
+
+  test('can identify an unsuccessful response object w/ data', () => {
+    expect(isResponse(buildResponse({ hello: 'world' }, new Error('Oops, there\'s been an error.')))).toBe(true);
+  });
+
+  test('can identify an invalid response object', () => {
+    expect(isResponse(undefined)).toBe(false);
+    expect(isResponse(null)).toBe(false);
+    expect(isResponse([])).toBe(false);
+    expect(isResponse({})).toBe(false);
+  });
+
+  test('can identify an incomplete response object', () => {
+    expect(isResponse({ success: true })).toBe(false);
+    expect(isResponse({ success: true, data: undefined })).toBe(false);
+    expect(isResponse({ success: true, error: undefined })).toBe(false);
+    expect(isResponse({ data: 123 })).toBe(false);
+    expect(isResponse({ data: undefined, error: undefined })).toBe(false);
+    expect(isResponse({ data: 'some data!', error: 'Some error' })).toBe(false);
+    expect(isResponse({ error: 'Some error' })).toBe(false);
   });
 });
