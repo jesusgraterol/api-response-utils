@@ -23,10 +23,11 @@ $ npm install -S api-response-utils
 
 ## Usage
 
+Building a successful response:
+
 ```typescript
 import { buildResponse, isResponse } from 'api-response-utils';
 
-// building a successful response:
 buildResponse();
 // {
 //   success: true,
@@ -41,16 +42,30 @@ buildResponse({ id: 1, nickname: 'Jane Doe' });
 //   data: { id: 1, nickname: 'Jane Doe' },
 //   error: undefined
 // }
+```
 
-// building an unsuccessful response:
+<br/>
+
+Building an unsuccessful response:
+
+```typescript
+import { buildResponse } from 'api-response-utils';
+
 buildResponse(undefined, new Error('The user was not found in the db.'));
 // {
 //   success: false,
 //   data: undefined,
 //   error: 'The user was not found in the db.'
 // }
+```
 
-// checking if a value is a response object:
+<br/>
+
+Checking if a value is a response object:
+
+```typescript
+import { isResponse } from 'api-response-utils';
+
 isResponse({ 
   success: true,
   data: { id: 1, nickname: 'Jane Doe' },
@@ -61,6 +76,7 @@ isResponse({
 isResponse({ foo: 'bar' });
 // false
 ```
+
 
 
 
