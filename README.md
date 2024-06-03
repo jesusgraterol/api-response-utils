@@ -26,7 +26,7 @@ $ npm install -S api-response-utils
 Building a successful response:
 
 ```typescript
-import { buildResponse, isResponse } from 'api-response-utils';
+import { buildResponse } from 'api-response-utils';
 
 buildResponse();
 // {
