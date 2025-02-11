@@ -73,6 +73,9 @@ describe('isResponse', () => {
     expect(isResponse(null)).toBe(false);
     expect(isResponse([])).toBe(false);
     expect(isResponse({})).toBe(false);
+    expect(isResponse(123)).toBe(false);
+    expect(isResponse('asd')).toBe(false);
+    expect(isResponse(new Date())).toBe(false);
   });
 
   test('can identify an incomplete response object', () => {

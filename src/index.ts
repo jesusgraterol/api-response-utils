@@ -13,20 +13,30 @@ import { IAPIResponse } from './types.js';
  * @param error
  * @returns IAPIResponse
  */
-const buildResponse = (data?: any, error?: any): IAPIResponse => ({
+const buildResponse = <T>(data?: T, error?: any): IAPIResponse<T> => ({
   success: error === undefined,
   data,
   error: error ? extractMessage(error) : undefined,
 });
 
 /**
+ * Verifies if a given value is an object.
+ * @param value
+ * @returns boolean
+ */
+const __isObject = (value: unknown): value is Record<string, unknown> => (
+  Boolean(value)
+  && typeof value === 'object'
+  && !Array.isArray(value)
+);
+
+/**
  * Verifies if a given value is a valid API Response object.
  * @param response
  * @returns boolean
  */
-const isResponse = (response: any): response is IAPIResponse => (
-  !!response
-  && typeof response === 'object'
+const isResponse = <T>(response: unknown): response is IAPIResponse<T> => (
+  __isObject(response)
   && typeof response.success === 'boolean'
   && Object.hasOwn(response, 'data')
   && Object.hasOwn(response, 'error')
