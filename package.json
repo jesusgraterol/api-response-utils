@@ -1,6 +1,6 @@
 {
   "name": "api-response-utils",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "The api-response-utils package streamlines RESTful API data exchange by introducing a standardized data structure for HTTP response bodies. This structure simplifies client-side data handling, promoting consistency and readability in your API interactions.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

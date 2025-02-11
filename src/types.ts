@@ -13,7 +13,7 @@ interface IAPIResponse<T> {
   success: boolean,
 
   // the data that will be sent to the client (regardless of the request's outcome)
-  data: T | undefined,
+  data: T,
 
   // the error thrown during the handling of the request (if any)
   error: string | undefined

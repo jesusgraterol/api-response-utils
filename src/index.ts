@@ -13,9 +13,9 @@ import { IAPIResponse } from './types.js';
  * @param error
  * @returns IAPIResponse
  */
-const buildResponse = <T>(data?: T, error?: any): IAPIResponse<T> => ({
+const buildResponse = <T = undefined>(data?: T, error?: any): IAPIResponse<T> => ({
   success: error === undefined,
-  data,
+  data: data as T,
   error: error ? extractMessage(error) : undefined,
 });
 
