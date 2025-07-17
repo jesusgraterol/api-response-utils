@@ -13,43 +13,54 @@ describe('buildResponse', () => {
   test('can include any primitives in the data', () => {
     expect(buildResponse(true)).toStrictEqual({ success: true, data: true, error: undefined });
     expect(buildResponse(100)).toStrictEqual({ success: true, data: 100, error: undefined });
-    expect(buildResponse('Hello!')).toStrictEqual({ success: true, data: 'Hello!', error: undefined });
-    expect(buildResponse({ id: 1, name: 'John Doe' })).toStrictEqual(
-      { success: true, data: { id: 1, name: 'John Doe' }, error: undefined },
-    );
-    expect(buildResponse([{ id: 1, name: 'John Doe' }, { id: 2, name: 'Jane Doe' }])).toStrictEqual(
-      {
-        success: true,
-        data: [{ id: 1, name: 'John Doe' }, { id: 2, name: 'Jane Doe' }],
-        error: undefined,
-      },
-    );
+    expect(buildResponse('Hello!')).toStrictEqual({
+      success: true,
+      data: 'Hello!',
+      error: undefined,
+    });
+    expect(buildResponse({ id: 1, name: 'John Doe' })).toStrictEqual({
+      success: true,
+      data: { id: 1, name: 'John Doe' },
+      error: undefined,
+    });
+    expect(
+      buildResponse([
+        { id: 1, name: 'John Doe' },
+        { id: 2, name: 'Jane Doe' },
+      ]),
+    ).toStrictEqual({
+      success: true,
+      data: [
+        { id: 1, name: 'John Doe' },
+        { id: 2, name: 'Jane Doe' },
+      ],
+      error: undefined,
+    });
   });
 
   test('can handle errors of any type', () => {
-    expect(buildResponse(
-      undefined,
-      'Ops, there was an error',
-    )).toStrictEqual({ success: false, data: undefined, error: 'Ops, there was an error' });
-    expect(buildResponse(
-      undefined,
-      new Error('Ops, there was an error'),
-    )).toStrictEqual({ success: false, data: undefined, error: 'Ops, there was an error' });
+    expect(buildResponse(undefined, 'Ops, there was an error')).toStrictEqual({
+      success: false,
+      data: undefined,
+      error: 'Ops, there was an error',
+    });
+    expect(buildResponse(undefined, new Error('Ops, there was an error'))).toStrictEqual({
+      success: false,
+      data: undefined,
+      error: 'Ops, there was an error',
+    });
   });
 
   test('can include data in an unsuccessful response', () => {
-    expect(buildResponse(
-      { some: 'data', foo: 123456 },
-      new Error('Ops, there was an error'),
-    )).toStrictEqual({
+    expect(
+      buildResponse({ some: 'data', foo: 123456 }, new Error('Ops, there was an error')),
+    ).toStrictEqual({
       success: false,
       data: { some: 'data', foo: 123456 },
       error: 'Ops, there was an error',
     });
   });
 });
-
-
 
 describe('isResponse', () => {
   test('can identify a successful response object', () => {
@@ -61,11 +72,15 @@ describe('isResponse', () => {
   });
 
   test('can identify an unsuccessful response object', () => {
-    expect(isResponse(buildResponse(undefined, new Error('Oops, there\'s been an error.')))).toBe(true);
+    expect(isResponse(buildResponse(undefined, new Error("Oops, there's been an error.")))).toBe(
+      true,
+    );
   });
 
   test('can identify an unsuccessful response object w/ data', () => {
-    expect(isResponse(buildResponse({ hello: 'world' }, new Error('Oops, there\'s been an error.')))).toBe(true);
+    expect(
+      isResponse(buildResponse({ hello: 'world' }, new Error("Oops, there's been an error."))),
+    ).toBe(true);
   });
 
   test('can identify an invalid response object', () => {
