@@ -24,27 +24,19 @@ const buildResponse = <T = undefined>(data?: T, error?: any): IAPIResponse<T> =>
  * @param value
  * @returns boolean
  */
-const __isObject = (value: unknown): value is Record<string, unknown> => (
-  Boolean(value)
-  && typeof value === 'object'
-  && !Array.isArray(value)
-);
+const __isObject = (value: unknown): value is Record<string, unknown> =>
+  Boolean(value) && typeof value === 'object' && !Array.isArray(value);
 
 /**
  * Verifies if a given value is a valid API Response object.
  * @param response
  * @returns boolean
  */
-const isResponse = <T>(response: unknown): response is IAPIResponse<T> => (
-  __isObject(response)
-  && typeof response.success === 'boolean'
-  && Object.hasOwn(response, 'data')
-  && Object.hasOwn(response, 'error')
-);
-
-
-
-
+const isResponse = <T>(response: unknown): response is IAPIResponse<T> =>
+  __isObject(response) &&
+  typeof response.success === 'boolean' &&
+  Object.hasOwn(response, 'data') &&
+  Object.hasOwn(response, 'error');
 
 /* ************************************************************************************************
  *                                         MODULE EXPORTS                                         *

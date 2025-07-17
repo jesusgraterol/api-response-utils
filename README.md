@@ -12,7 +12,7 @@ The `api-response-utils` package streamlines RESTful API data exchange by introd
 
 Install the package:
 ```bash
-npm install -S api-response-utils
+npm i -S api-response-utils
 ```
 
 ### Examples
@@ -126,28 +126,3 @@ npm run test:unit
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
-
-
-
-
-
-<br/>
-
-## Deployment
-
-Install dependencies:
-```bash
-npm install
-```
-
-
-Build the library:
-```bash
-npm start
-```
-
-
-Publish to `npm`:
-```bash
-npm publish
-```
